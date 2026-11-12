@@ -1,5 +1,4 @@
-
-name: Pubblicazione GitHub Pages
+name: Deploy Angular to GitHub Pages
 
 on:
   push:
@@ -13,29 +12,46 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
+  group: pages
   cancel-in-progress: true
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: Hotel-Belvedere-Angular/Hotel-Belvedere-Angular/package-lock.json
+
+      - name: Install dependencies
+        working-directory: Hotel-Belvedere-Angular/Hotel-Belvedere-Angular
+        run: npm ci
+
+      - name: Build Angular
+        working-directory: Hotel-Belvedere-Angular/Hotel-Belvedere-Angular
+        run: npm run build:pages
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: Hotel-Belvedere-Angular/Hotel-Belvedere-Angular/dist/hotel-belvedere/browser
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
-      - name: Scarica il repository
-        uses: actions/checkout@v6
-
-      - name: Configura GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Carica i file del sito
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: '.'
-
-      - name: Pubblica il sito
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
