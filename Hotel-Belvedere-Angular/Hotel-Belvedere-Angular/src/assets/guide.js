@@ -1,58 +1,15 @@
-<!DOCTYPE html>
-<html lang="it"><head><meta charset="utf-8"><title>Hotel Belvedere · guida all’interrogazione</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f7f7f8;--fg:#18181b;--mut:#71717a;--card:#fff;--bd:#e4e4e7;--acc:#2563eb;--ok:#16a34a;--bad:#dc2626;--zi:#f1f5ff;--ze:#effaf4;--zd:#fdf2f8;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1115;--fg:#ececf0;--mut:#9a9aa5;--card:#181b21;--bd:#2b2f38;--acc:#7aa2ff;--ok:#4ade80;--bad:#f87171;--zi:#1a2236;--ze:#10281f;--zd:#2a1626;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f1115;--fg:#ececf0;--mut:#9a9aa5;--card:#181b21;--bd:#2b2f38;--acc:#7aa2ff;--ok:#4ade80;--bad:#f87171;--zi:#1a2236;--ze:#10281f;--zd:#2a1626;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
-.w{max-width:920px;margin:0 auto;padding:28px 16px 60px}
-h1{font-size:27px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px}
-h2{font-size:20px;font-weight:650;margin:0 0 12px}
-h3{font-size:16px;margin:20px 0 6px;color:var(--acc)}
-.m{color:var(--mut);margin:0 0 20px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;margin-bottom:16px}
-svg{width:100%;height:auto;display:block}
-.lg{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 4px;font-size:13px;color:var(--mut)}
-.ch{display:inline-flex;align-items:center;gap:6px}.ch i{width:18px;height:4px;border-radius:2px;display:inline-block}
-.bar{height:3px;background:var(--bd);border-radius:2px;margin:8px 0 12px}.bar i{display:block;height:100%;width:0;background:var(--acc);border-radius:2px}
-.ctl,.tabs{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.tabs{border-bottom:1px solid var(--bd);margin:4px 0 14px}
-button{font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:10px;padding:5px 12px;cursor:pointer}
-button.dk{padding:2px 9px;font-size:13px}button.on{background:var(--acc);color:var(--card);border-color:var(--acc)}
-button.tb{background:none;border:0;border-bottom:2px solid transparent;border-radius:0;padding:8px 6px;margin-right:10px;color:var(--mut)}
-button.tb.on{color:var(--acc);border-color:var(--acc);background:none}
-#dt{color:var(--mut);margin-left:auto;font-size:14px}
-#pn p{margin:8px 0}#pn p:empty{display:none}
-#pn ul{margin:6px 0;padding-left:20px}#pn li{margin:7px 0}
-.qa{margin:0 0 12px;padding:12px 14px;border:1px solid var(--bd);border-radius:12px}.qh{font-weight:650;margin-bottom:4px}.qa p{margin:0}
-p.q{padding:8px 14px;border-left:3px solid var(--acc);background:var(--bg);border-radius:0 10px 10px 0}
-.dev{margin:0 0 14px}.dt{font-weight:650;font-size:14px;margin:0 0 4px}
-pre{background:var(--bg);border:1px solid var(--bd);padding:12px;border-radius:10px;overflow-x:auto;margin:0;font:13px/1.5 Consolas,Menlo,monospace}
-.gg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:640px){.gg{grid-template-columns:1fr}}
-.gc{background:var(--bg);border-radius:12px;padding:12px 14px}.gc b{display:block;margin-bottom:2px}.gc p{margin:0;color:var(--mut);font-size:14.5px}
-svg text{font:15px system-ui,sans-serif;fill:var(--fg)}
-.nd{fill:var(--card);stroke:var(--bd);stroke-width:1.5}.nd.hl{stroke:var(--acc);stroke-width:2.5}
-.sb{font-size:11px!important;fill:var(--mut)!important}
-.ll{font-size:12px!important;fill:var(--mut)!important}
-.zi{fill:var(--zi)}.ze{fill:var(--ze)}.zd{fill:var(--zd)}
-.zt{font-size:13px!important;font-weight:700;fill:var(--mut)!important}
-.tg{font-size:14px!important;font-weight:600}.tg.ok{fill:var(--ok)!important}.tg.bad{fill:var(--bad)!important}.tg.d{fill:#ec4899!important}.tg.a{fill:var(--acc)!important}
-.dot.ok{fill:var(--ok)}.dot.bad{fill:var(--bad)}.dot.a{fill:var(--acc)}
-.xx{font-size:26px!important;font-weight:700;fill:var(--bad)!important}
-</style></head><body><div class="w">
-<h1>Hotel Belvedere · guida all’interrogazione</h1>
-<p class="m">Per ogni problema: animazione della rete, spiegazione, risposte alle domande, formulario con codice commentato e diario con le prove. Frecce ◀ ▶ o barra spaziatrice. Pacchetti verdi = passano, rossi = bloccati.</p>
-<div class="card"><svg id="sv" viewBox="0 0 900 400" role="img" aria-label="Topologia animata della rete"></svg>
-<div id="lg" class="lg"></div>
-<div class="bar"><i id="pf"></i></div>
-<div class="ctl"><button id="bv" aria-label="Precedente">◀</button><button id="bt" aria-label="Pausa">❚❚</button><button id="bn" aria-label="Successivo">▶</button><span id="nav"></span><span id="dt"></span></div></div>
-<div class="card"><h2 id="h"></h2><div class="tabs" id="tb"></div><div id="pn"></div></div>
-<div class="card"><h2>Glossario</h2><div id="gl"></div></div>
-</div>
-<script>
+/*
+ * Motore originale della guida Hotel Belvedere.
+ * I contenuti, le animazioni, i passaggi e le interazioni sono stati mantenuti.
+ * L'unica modifica strutturale è l'inizializzazione/chiusura gestita dal ciclo di vita Angular.
+ */
+(function(){
+  var active=false;
+  var rafId=0;
+  var keyHandler=null;
+  window.initHotelBelvedereGuide=function(){
+    if(active)return function(){};
+    active=true;
 var P={PC:["PC-REC1",70,60],CL:["LAPTOP-CL1",70,150],SWP:["SW-PIANO",190,105],HALL:["Presa hall",190,230,5],CORE:["CORE",330,200],DHCP:["SRV-DHCP",250,335],TEC:["PC-TECNICO",360,355],WEB:["SRV-WEB",490,345],FW:["FW ASA",470,200,7],EDGE:["R-EDGE",520,200],ISP:["R-ISP",740,200],INT:["Internet",845,200]};
 var C={v10:"#3b82f6",v20:"#f59e0b",v30:"#10b981",v40:"#14b8a6",v50:"#8b5cf6",v60:"#ec4899",v99:"#9ca3af",n70:"#0ea5e9",pub:"#64748b",tr:"#334155"};
 var N={v10:"VLAN 10 · Reception · 10.20.10.0/24",v20:"VLAN 20 · Clienti · 10.20.20.0/24",v30:"VLAN 30 · Server · 10.20.30.0/24",v40:"VLAN 40 · Gestione · 10.20.40.0/24",v50:"VLAN 50 · Transito · 10.20.50.0/24",v60:"VLAN 60 · DMZ · 10.20.60.0/24",v99:"VLAN 99 · Parcheggio (porte spente)",n70:"Rete 10.20.70.0/24 · tra FW e R-EDGE",pub:"Rete pubblica 198.51.100.0/29 · hotel ↔ provider",tr:"Trunk: più VLAN sullo stesso cavo"};
@@ -199,6 +156,7 @@ function panel(){var s=S[cur],pn=document.getElementById("pn"),i,bs=document.que
  pn.innerHTML=tb==0?s.e+(s.x?"<h3>Spiegazione completa, passo per passo</h3>"+s.x:""):tb==1?(QA[cur]?qa(cur):s.r).replace(/<b>(\d)\.<\/b>/g,'</p><p class="q"><b>$1.</b>'):s.d.replace(/<b>(Intopp|Prov|Da |Orale)/g,'</p><p class="q"><b>$1')}
 function go(i){cur=(i+S.length)%S.length;el=0;render(cur);window.scrollTo(0,0)}
 function tick(now){
+ if(!active)return;
  if(playing)el+=now-last;last=now;if(el>=DUR){el=0;go(cur+1)}
  document.getElementById("pf").style.width=(el/DUR*100)+"%";
  K.forEach(function(k,i){var u=((el/4200)+i*0.4)%1,m=Math.min(u/0.8,1),n=k.pts.length-1,L2=[],t=0,j;
@@ -209,7 +167,7 @@ function tick(now){
   dd.setAttribute("cx",x);dd.setAttribute("cy",y);
   if(k.b){var hit=m>=1;dd.setAttribute("opacity",hit?0:1);xx.setAttribute("x",k.pts[n][0]);xx.setAttribute("y",k.pts[n][1]-14);xx.setAttribute("opacity",hit&&u<0.97?1:0)}
   else dd.setAttribute("opacity",u>0.85?Math.max(0,(1-u)*6):1)});
- requestAnimationFrame(tick)}
+ rafId=requestAnimationFrame(tick)}
 function mk(par,txt,cls,fn,tt){var b=document.createElement("button");b.className=cls;b.textContent=txt;if(tt){b.title=tt;b.setAttribute("aria-label",tt)}b.onclick=fn;par.appendChild(b)}
 S.forEach(function(s,i){mk(document.getElementById("nav"),i==0?"●":(i==S.length-1?"★":i),"dk",function(){go(i)},s.t)});
 TB.forEach(function(n,i){mk(document.getElementById("tb"),n,"tb",function(){tb=i;panel()})});
@@ -217,6 +175,9 @@ var gl=document.getElementById("gl");gl.className="gg";G.forEach(function(g){var
 document.getElementById("bv").onclick=function(){go(cur-1)};
 document.getElementById("bn").onclick=function(){go(cur+1)};
 document.getElementById("bt").onclick=function(){playing=!playing;this.textContent=playing?"❚❚":"▶"};
-document.addEventListener("keydown",function(e){if(e.key=="ArrowRight")go(cur+1);else if(e.key=="ArrowLeft")go(cur-1);else if(e.key==" "){e.preventDefault();document.getElementById("bt").click()}});
-render(0);requestAnimationFrame(function(t){last=t;tick(t)});
-</script></body></html>
+keyHandler=function(e){if(e.key=="ArrowRight")go(cur+1);else if(e.key=="ArrowLeft")go(cur-1);else if(e.key==" "){e.preventDefault();document.getElementById("bt").click()}};
+document.addEventListener("keydown",keyHandler);
+render(0);rafId=requestAnimationFrame(function(t){last=t;tick(t)});
+return function(){active=false;cancelAnimationFrame(rafId);document.removeEventListener("keydown",keyHandler)};
+  };
+})();
